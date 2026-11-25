@@ -1,66 +1,75 @@
 # Trusora
 
 **Know who is really hiring before you apply.**
-Trusora (formerly *Scam Shield*) is an internship and company legitimacy verification platform. It reads public internship listings, checks them for scam signals, tries to match the advertised company against official records, and tells the student plainly what it could and could not verify.
+
+Trusora (formerly *Scam Shield*) is an internship and company legitimacy verification platform. It reads public
+internship listings, analyses them for scam signals, tries to match the advertised company against official Indian
+company records, and tells the student plainly what it could and could not verify.
 
 > **Notice:** This repository contains public-facing product documentation and visual materials only. The application's source code is maintained separately in a private repository.
 
-![status](https://img.shields.io/badge/status-in%20development-0B1F4B?style=flat-square)
-![focus](https://img.shields.io/badge/focus-internship%20legitimacy-2F6BFF?style=flat-square)
-![source](https://img.shields.io/badge/source%20code-private-C6F432?style=flat-square&labelColor=0B1F4B)
+| | |
+|---|---|
+| **Status** | Under active development; not publicly launched |
+| **Focus** | Internship legitimacy for students, starting with India |
+| **Evidence date** | Documentation checked against the private repository on 2026-11-25 |
+| **Source code** | Private |
 
 ---
 
 ## The problem
 
-Internship seekers, especially students and first-time applicants, face a flood of listings across job boards, social posts and direct messages. Some are fake: they ask for "registration fees" or deposits, push the conversation to WhatsApp or Telegram, use a free-mail address that imitates a real company, or copy a genuine posting word for word. A student has little time and few tools to tell the difference.
+Students meet internship listings on job boards, career pages, social posts and direct messages. Some are fraudulent:
+they ask for a "registration" or "training" fee, move the conversation to WhatsApp, ask for identity documents over chat,
+write from a free mailbox, or copy a real posting under another company's name. Checking each one by hand takes time that
+first-time applicants rarely have.
 
-## Who it is for
+## The solution
 
-- Students and early-career applicants looking for internships, with a first focus on India.
-- Anyone who wants a second opinion on a listing or a recruiter before sharing documents or money.
+Trusora analyses each listing before it reaches the student and shows **evidence**, not a bare verdict: the exact words
+that raised a concern, what could be verified about the company, and what could not be checked.
 
-## What Trusora does
+## Main capabilities
 
-| Capability | What it means |
+| Capability | Status |
 |---|---|
-| **Internship discovery** | Collects listings from public job boards, company career pages and feeds, politely and without logging in to protected sites. |
-| **Fit filtering and scoring** | Keeps internships that match the student's location, remote preference and skills, and explains the match. |
-| **Scam-signal analysis** | A transparent rule engine looks for fee demands, off-platform contact, look-alike recruiter addresses, very young company domains, copied postings and similar signals. Each finding shows the exact wording that triggered it. |
-| **Optional AI wording check** | An optional language-model reading helps interpret ambiguous money-related wording. The result is quote-checked in code and never replaces the rule engine. |
-| **Company identity checks** | Compares the advertised company against official company-registry data, and checks whether the website, recruiter email and hiring channel belong to that company. |
-| **Application tracker** | Tracks each internship, with drafts and follow-up reminders. |
+| Internship discovery from public boards and feeds, read politely (robots.txt, rate limits, no logins) | Implemented and tested |
+| Filtering and 0-100 skill-match scoring | Implemented and tested |
+| Rule-based scam-signal analysis that returns the matched text with each finding | Implemented and tested |
+| Optional AI fee reading, with quote verification in code | Implemented; tested with a fake model only |
+| Company identity checks against 3.8 million MCA company and LLP records (local mode) | Implemented and tested |
+| Application tracker, follow-ups, drafted notes | Implemented and tested |
+| Full verification report shown in the web interface | **Partial** (stored, not yet fully rendered) |
+| Registry checks in hosted mode | **Not available** (report says *unavailable*) |
+| Community scam reporting, alerts, plans | **Not built** |
 
-## Verified, possible match, or unavailable
+Trusora keeps *verified*, *possible match*, *mismatch*, *unverified* and *unavailable* apart. It does not claim guaranteed
+scam detection or universal company verification, and **unverified is not the same as fake**.
 
-Trusora keeps these answers apart and does not merge them into a single "trust" number.
+## Screenshots
 
-| Result | What it means for the student |
+Genuine screenshots from the running application (demo mode with built-in sample data and two synthetic listings; no real
+user data). The interface currently carries the name "Internship Assistant" and its own violet accent. See
+[`screenshots/README.md`](screenshots/README.md) for how they were made and what could not be captured.
+
+| | |
 |---|---|
-| **Verified** | A record or source matched, and the evidence, source and date are shown. |
-| **Possible match** | A name resembles a registered company but cannot be tied to it with confidence (for example, a very common name, or a brand that differs from its registered name). Treated as *not verified*. |
-| **Mismatch / conflicting** | The evidence points to a different company, or sources disagree. The student is asked to check before continuing. |
-| **Unverified** | Nothing was found to confirm the claim. This is **not** the same as "fake". |
-| **Unavailable** | The check could not be run (for example, no registry data is available in that deployment). Shown as a limitation, not as a finding. |
-
-Further principles:
-
-- **It is a ranking with explanations, not a fraud probability.** Trusora does not guarantee that a listing is safe or that a scam will be caught.
-- **A registered company is not automatically a safe company.** A valid registration does not outweigh a fee demand or a suspicious recruiter.
-- **Company, recruiter and evidence confidence are reported separately**, because a real company can be impersonated.
-- Registry data is a snapshot, and every result is shown with its date.
+| ![Feed with verification marks](screenshots/02-feed-all-with-verification-marks.png)<br>**Feed with verification marks.** Amber *Not enough evidence*, red *Likely scam* with reasons, green checks. | ![Risk analysis of a flagged listing](screenshots/04-risk-analysis-flagged-listing.png)<br>**Risk analysis.** Each flag in plain language, for a synthetic fee-demanding listing. |
+| ![Feed of listings to apply to](screenshots/01-feed-to-apply.png)<br>**Feed.** Best match first, each listing with a verification mark. | ![Detail for an unverified company](screenshots/05-risk-analysis-unverified-company.png)<br>**Unverified company.** The student is told to check the company before applying. |
+| ![Tracker](screenshots/03-tracker.png)<br>**Tracker.** Match score, flags and status for every listing. | ![Skipped listings](screenshots/09-skipped-listings.png)<br>**Skipped listings.** The exact text that made a filter reject a listing, with *Track anyway*. |
+| ![Dashboard](screenshots/07-dashboard.png)<br>**Dashboard.** Weekly goal, pipeline and weekly applications (sample data). | ![Bot activity](screenshots/08-bot-activity.png)<br>**Bot activity.** What a run scanned, added and skipped, and why. |
+| ![Add internship](screenshots/06-add-internship-form.png)<br>**Add internship.** Paste a link or fill a form; the same analysis runs. | ![Platforms](screenshots/10-platforms.png)<br>**Platforms.** The sources read automatically and how the rest are covered. |
 
 ## Architecture overview
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#0B1F4B','primaryTextColor':'#FFFFFF','primaryBorderColor':'#2F6BFF','lineColor':'#2F6BFF','secondaryColor':'#13306E','tertiaryColor':'#0B1F4B'}}}%%
 flowchart LR
-    SRC[Public job boards<br/>and company feeds] --> FETCH[Polite fetchers<br/>robots.txt, rate limits]
-    FETCH --> EVAL[Filters and fit scoring]
+    SRC[Public job boards and feeds] --> FETCH[Polite fetchers]
+    FETCH --> EVAL[Filters and match scoring]
     EVAL --> SHIELD[Scam-signal rule engine]
-    SHIELD --> AI[Optional AI wording check]
+    SHIELD --> AI[Optional AI fee reading]
     SHIELD --> ID[Company identity checks]
-    REG[(Official company<br/>registry snapshot)] --> ID
+    REG[(MCA registry snapshot<br/>read-only, local mode)] --> ID
     AI --> REPORT[Evidence report]
     ID --> REPORT
     REPORT --> DB[(Application database)]
@@ -68,66 +77,73 @@ flowchart LR
     API --> UI[Web app]
 ```
 
-More detail is in [`architecture/`](architecture/).
-
-## Security and reliability engineering
-
-Highlights of what has been built into the product (described at a high level only):
-
-- **Guarded outbound requests.** Every request the system makes to the open web goes through a guard that refuses non-public addresses, re-validates redirects and defends against DNS rebinding.
-- **Respectful data collection.** `robots.txt` is honoured, requests are rate-limited per host, and there is no sign-in bypassing and no circumvention of bot checks.
-- **Secrets handled with care.** Users' optional AI keys are encrypted at rest with key rotation, and are kept out of logs and API responses.
-- **Passwordless sign-in.** Single-use sign-in links and Google sign-in in hosted mode; a local-only mode that accepts connections from the same machine only.
-- **Abuse limits.** Persistent rate limiting that survives restarts.
-- **Evidence over assertion.** Every warning carries the text that triggered it, and the AI check is validated against the source wording before it can influence a result.
-- **Honest limits.** The product records what it could not check, so missing data is never presented as a clean result.
-- **Testing and review.** An automated test suite, browser-level interface checks, and internal security review and remediation passes.
-
-## Screenshots
-
-Real product screenshots will be added here once they have been reviewed for personal data. No mock-ups are presented as the working product.
-
-| Screen | Status |
-|---|---|
-| Internship feed with verification marks | _Placeholder, screenshot to be added_ |
-| Internship detail drawer with evidence report | _Placeholder, screenshot to be added_ |
-| Company identity checks | _Placeholder, screenshot to be added_ |
-| Application tracker | _Placeholder, screenshot to be added_ |
-| Dashboard | _Placeholder, screenshot to be added_ |
-
-See [`screenshots/`](screenshots/) for the capture guidelines.
-
-## Demonstration
-
-A short walkthrough video will be linked here.
-_Placeholder, link to be added._ See [`demonstrations/`](demonstrations/).
+Four detailed diagrams (system, risk-analysis workflow, company verification, registry processing) are in
+[`architecture/`](architecture/README.md).
 
 ## Technology stack
 
 | Layer | Technology |
 |---|---|
-| Backend | Python, Flask |
-| Data | SQLite (local) and PostgreSQL (hosted), behind one data layer |
-| Frontend | React, TypeScript, Vite, Tailwind CSS |
+| Back end | Python, Flask, Authlib; waitress locally, gunicorn when hosted |
+| Data | SQLite (local) and PostgreSQL (hosted) behind one data-access layer; a separate read-only SQLite file for the registry |
+| Front end | React 18, TypeScript, Vite, Tailwind CSS, Framer Motion |
 | Browser automation | Playwright (optional, local, user-supervised) |
-| AI (optional) | Groq or Google Gemini through their public APIs |
-| Quality | Python `unittest` suites and browser-level interface checks |
+| AI (optional) | Groq or Google Gemini through their public APIs, using the user's own key |
+| Hosting and scheduling | Managed web hosting and PostgreSQL, scheduled workflow for daily runs (hosted mode) |
+| Quality | Python `unittest` suites, browser-level interface checks, dependency-audit workflow |
 
-## Development status
+## Engineering highlights
 
-Trusora is **under active development** and is **not publicly launched**.
+- **Evidence-first design.** Every finding carries the text that triggered it; the report lists what could not be checked.
+- **Four separate dimensions.** Fraud risk, company identity, recruiter identity and evidence confidence are never merged.
+- **A model that must show its quote.** The optional AI reading can only add a finding backed by text that actually appears
+  in the advert.
+- **Conservative registry matching** over 3,824,308 records, with legal-form agreement, common-name and post-snapshot
+  rules; a typo or a parent brand stays *unverified* rather than risking a wrong match.
+- **Data-quality layer for public data.** No row is dropped; malformed, placeholder and test records are flagged and kept
+  out of matching.
+- **Defence in depth.** A connect-time outbound-request guard, encrypted provider keys with rotation, multi-step
+  administrator sign-in and persistent rate limits.
+- **Honest measurement.** Only the untuned benchmark set is quoted as evidence, and no real-world accuracy is claimed.
 
-| Area | State |
+## Testing and reliability
+
+| Measure | Result (verified 2026-11-25) |
 |---|---|
-| Internship discovery, filtering and scoring | Built and in use during development |
-| Scam-signal rule engine with evidence output | Built; being evaluated and tuned |
-| Company identity checks against registry data | Built; registry-backed checks currently run only where registry data is installed locally |
-| Optional AI wording check | Built; requires the user's own provider key |
-| Showing the full verification report in the web app | In progress |
-| Public launch, community scam reporting, alerts and plans | Not built |
+| Python suite | **395 tests, 0 failures, 11 skipped** (PostgreSQL tests need a test database) |
+| Scam-signal benchmark, never-tuned hold-out | **50% of scams marked risky, 0% of legitimate listings marked risky** (10 + 10 hand-written listings) |
+| Front-end unit tests | None |
+| Browser-level interface checks | Exist; not run for this repository |
+| Independent penetration test | Not done |
 
-Detection quality is still being measured. No accuracy figures are published yet, and none should be assumed.
+The 50% figure is deliberately shown: on wording it was never tuned against, the rules alone miss half of the scams.
+Details, limits and what the numbers do not show are in [`TESTING.md`](documentation/TESTING.md) and
+[`SCAM_DETECTION.md`](documentation/SCAM_DETECTION.md).
+
+## Documentation
+
+| Document | Contents |
+|---|---|
+| [Product overview](documentation/PRODUCT_OVERVIEW.md) | Problem, users, capabilities, workflow, status |
+| [Scam detection](documentation/SCAM_DETECTION.md) | Rule engine, fee detection, AI reading, scoring, benchmark, false positives |
+| [Company verification](documentation/COMPANY_VERIFICATION.md) | MCA registry, CIN and name matching, statuses, human review |
+| [Security](documentation/SECURITY.md) | Authentication, sessions, SSRF protection, secrets, rate limits, testing |
+| [Testing](documentation/TESTING.md) | Strategy, verified counts, coverage boundaries |
+| [Engineering decisions](documentation/ENGINEERING_DECISIONS.md) | Decisions, trade-offs, lessons |
+| [Architecture diagrams](architecture/README.md) | Four Mermaid diagrams |
+| [Screenshots](screenshots/README.md) | Provenance and gaps |
+
+## Current implementation status
+
+| Label | Items |
+|---|---|
+| **Implemented and verified** | Discovery, filtering, scoring, rule engine, company identity checks, tracker, user isolation, key encryption (all covered by the 2026-11-25 test run) |
+| **Implemented, not fully tested** | Optional AI reading (fake model only), hosted multi-user mode (PostgreSQL tests skipped), Google sign-in, browser-assisted apply (no real browser in tests) |
+| **Partial** | Full verification report in the interface; server-side auto-apply (no successful submission recorded) |
+| **Blocked** | Registry checks in hosted mode (the register needs hosting) |
+| **Not built / not launched** | Community reporting, alerts, plans, public launch, independent benchmark dataset |
 
 ## Private source-code notice
 
-The source code is private and is not published, mirrored or forked in this repository. This repository only holds documentation, diagrams and visual materials.
+The source code is private and is not published, mirrored or forked here. This repository contains only documentation,
+diagrams and genuine screenshots. No license is granted for the material in this repository.
